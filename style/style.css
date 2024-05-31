@@ -121,12 +121,28 @@ section.catalog .catalog-header {
     margin-bottom: 0;
 }
 
-.description-more {
+.card-btns {
     display: none;
-    margin-top: 0;
-    text-align: inter-word;
-    font-size: 0.9rem;
 }
+
+.product-card:hover .card-btns{
+    display:flex;
+    position: relative;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.card-btn{
+    display: flex;
+    position: relative;
+    padding: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
 
 .see-more-btn {
     cursor: pointer;
