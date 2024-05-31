@@ -4,13 +4,31 @@
     --main-font: 'TT Firs Neue Trl';
     --main-dark-color: #004AAD;
     --main-light-color: #CFEEFF;
+    --main-light-gray: #f7f7fd;
+    --absolute-white: #FFFFFF;
+
 }
 
 body {
     padding: 1rem 2rem 0 2rem;
     margin: 0%;
     font-family: var(--main-font);
-    background-color: var(--main-light-color);
+    background-color: var(--main-light-gray);
+}
+
+.header-item.btn {
+    padding: 0.4rem 0.4rem 0.2rem 0.4rem;
+    border-width:0.1rem;
+    border-radius: 0.3rem;
+    background-color: #FFF;
+    fill: var(--main-dark-color);
+    border-color: var(--main-dark-color);
+    cursor: pointer;
+}
+
+.header-item.buttons {
+    margin-left: auto;
+    margin-right: 0.5rem;
 }
 
 .container.header {
@@ -20,7 +38,7 @@ body {
     border-bottom: 0.1rem solid #cecece;
     position: sticky;
     top: 0;
-    background-color: #FFF;
+    background-color: var(--absolute-white);
 }
 
 .header-item.logo {
@@ -44,7 +62,7 @@ section.catalog {
     padding: 1rem 1rem 1rem 1rem;
     margin: 0.5rem 0 0.5rem 0;
     border-radius: 1rem 1rem 0rem 0rem;
-    background-color: #FFF;
+    background-color: var(--main-light-gray)
 }
 
 section.catalog .catalog-header {
@@ -61,7 +79,7 @@ section.catalog .catalog-header {
 .product-list .product-card {
     box-shadow: 5px 5px rgba(0, 0, 0, 0.041);
     padding: 2rem;
-    background-color: var(--main-light-color);
+    background-image: linear-gradient(.50turn, var(--main-light-color), var(--absolute-white));
     padding: 0;
     border-radius: 1rem 1rem 0rem 0rem;
     border: 0.05rem solid #cecece;
@@ -114,7 +132,7 @@ section.catalog .catalog-header {
     cursor: pointer;
     margin: 0;
     padding: 0;
-    background-color: var(--main-light-color);
+    background-color: transparent;
     color: var(--main-dark-color);
     border: 0;
 
