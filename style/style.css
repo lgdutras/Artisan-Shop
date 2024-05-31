@@ -154,6 +154,10 @@ section.catalog .catalog-header {
 
 }
 
+p.description-more {
+    display: none;
+}
+
 @media (min-width: 400px) {
     
     .container.header {
