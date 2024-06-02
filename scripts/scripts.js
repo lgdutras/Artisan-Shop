@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     
     fetchCategories().then(categories => {fetchProducts(categories)});
-    
+    categoriesFilter()
 });
 
 const fetchProducts = async (categories) => {
@@ -138,7 +138,7 @@ function displayProducts(products, categories) {
         
         
     });
-}
+};
 
 function seeMoreToogle(card_id) {
     let product_description = document.getElementById(`product_description_${card_id}`)
@@ -166,7 +166,7 @@ function seeMoreToogle(card_id) {
 
     }
 
-}
+};
 
 const deleteItem = async(item_id) => {
     try {
@@ -185,7 +185,7 @@ const deleteItem = async(item_id) => {
     } catch (error) {
         console.error('Error while deleting products:', error);
     }
-}
+};
 
 function deleteItemCall(item_id) {
     
@@ -202,15 +202,13 @@ function deleteItemCall(item_id) {
         text = "deletion canceled"
 
     }
-    
-    
-}
+};
 
 function hideShowToggle(item_id) {
 
     let edit_form = document.querySelector(`#popup_form_${item_id}`);
     edit_form.classList.toggle('hidden')
-}
+};
 
 function editItem(item_id) {
 
@@ -230,7 +228,7 @@ function editItem(item_id) {
     }
 
     updateItem(item_id, edited_item_data, card);
-}
+};
 
 const updateItem = async(item_id, update_data) => {
     
@@ -248,4 +246,5 @@ const updateItem = async(item_id, update_data) => {
         }
     } catch (error) {
         console.error('Error while updating product', error)
-    }}
+}};
+
