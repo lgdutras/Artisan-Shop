@@ -248,3 +248,69 @@ const updateItem = async(item_id, update_data) => {
         console.error('Error while updating product', error)
 }};
 
+function normalized(string) {
+    
+    if (typeof string !== 'string') {
+        return '';
+      }
+      return string.replace(/['\s]/g, '');
+
+};
+
+function categoriesFilter() {
+
+    let catalog_filter_buttons = document.getElementById('buttons-wrap')
+
+    fetchCategories().then(function(categories) {
+        categories.forEach(category => {
+            catalog_filter_buttons.innerHTML += `<button id="${normalized(category)}" value="${normalized(category)}" class="button-categories-filter" onclick="filterCategory(${normalized(category)})">${category}</button>`;
+        })
+    })
+    
+};
+
+function filterCategory(category) {
+
+    const buttons = document.querySelectorAll('.buttons-wrap .button-categories-filter');
+    
+    buttons.forEach(button => {
+        
+        let current_category = normalized(button.getAttribute('value'));
+        let category_to_select = normalized(category.innerText);
+        let cards = document.querySelectorAll('.product-list .product-card');
+
+        if (current_category == category_to_select) {
+
+            let already_selected = button.classList.contains('selected')
+            
+            if (already_selected) {
+
+                button.classList.toggle('selected');
+
+                cards.forEach(card => {
+                    card.classList.remove('hidden');
+                })
+
+            } else {
+
+                button.classList.toggle('selected');
+                
+                cards.forEach(card => {
+
+                    let card_category = normalized(card.querySelector('.product-category').innerText)
+                    if (card_category != category_to_select) {
+                        card.classList.add('hidden');
+                    } else {
+                        card.classList.remove('hidden');
+                    }
+                });
+            }
+        } else {
+            
+            button.classList.remove('selected');
+
+        }
+        
+    })
+
+};
