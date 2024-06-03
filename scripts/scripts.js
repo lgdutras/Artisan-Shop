@@ -67,16 +67,18 @@ function displayProducts(products, categories) {
 
         })
 
+        product_is_new = product.title == "New Item"
+
         product_card = `
         <div class="product-card" id="${product.id}">
             <div class="card-header">
                 <div class="card-btns">
-                    <button id="delete_1" class="remove-btn card-btn" onclick="deleteItemCall(${product.id})">
+                    <button id="delete" class="remove-btn card-btn" onclick="deleteItemCall(${product.id})">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#E50000" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                             <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"></path>
                         </svg>
                     </button>
-                    <button id="edit_1" class="edit-btn card-btn" onclick="hideShowToggle(${product.id})">
+                    <button id="edit" class="edit-btn card-btn" onclick="hideShowToggle(${product.id})">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#004AAD" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                             <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"></path>
                         </svg>
@@ -94,21 +96,21 @@ function displayProducts(products, categories) {
                 </p>
             </div>
 
-            <div class="popup-form hidden" id="popup_form_${product.id}">
+            <div class="popup-form ${product_is_new ? '' : 'hidden'}" id="popup_form_${product.id}">
                 <div class="form-group form-data">
                     <label for="name">Product Name</label>
-                    <input id="name" type="text" class="input-field form-element" value="${product.title}"></input>
+                    <input id="name" type="text" class="input-field form-element" value="${product.title}" required></input>
                     
                     <label for="price">Price</label>
-                    <input id="price" type="text" class="input-field form-element" value="${product.price}"></input>
+                    <input id="price" type="text" class="input-field form-element" value="${product.price}" required></input>
                     
                     <label for="description">Description</label>
-                    <textarea rows=10 id="description" class="input-field form-element text-area">${product.description}</textarea>
+                    <textarea rows=10 id="description" class="input-field form-element text-area" required>${product.description}</textarea>
                     
                     <label for="image link"></label>
-                    <input id="image" type="text" class="input-field form-element" value="${product.image}"></input>
+                    <input id="image" type="text" class="input-field form-element" value="${product.image}" required></input>
                     
-                    <label for="category">Category</label>
+                    <label for="category" required>Category</label>
                     <select name="category" id="category">
                         ${categories_options_list_str}
                     </select>
@@ -122,22 +124,27 @@ function displayProducts(products, categories) {
         </div>
         `;
         
+
         // Usar innerHTML para adicionar o HTML ao productList
         let product_card_exists = document.getElementById(`${product.id}`) != undefined
 
         if (product_card_exists) {
 
             product_card_to_set = document.getElementById(`${product.id}`);
-            product_card_to_set.innerHTML = product_card
+
+            const card_to_replace = document.createElement('div');
+            card_to_replace.innerHTML = product_card;
+
+            product_card_to_set.replaceWith(card_to_replace)
 
         } else {
 
-            product_list.innerHTML += product_card;
+            product_list.insertAdjacentHTML('afterbegin', product_card)
 
         }
-        
-        
     });
+
+    sortBy();
 };
 
 function seeMoreToogle(card_id) {
@@ -169,22 +176,32 @@ function seeMoreToogle(card_id) {
 };
 
 const deleteItem = async(item_id) => {
-    try {
-        const api_delete = axios.create({
-            baseURL: 'https://fakestoreapi.com'
-        });
+    
+    if (item_id > 20) {
 
-        let response_delete = await api_delete.delete(`/products/${item_id}`);
-        if (response_delete.data) {
+        let product_card = document.getElementById(item_id);
+        product_card.remove();
 
-            let deleted_item = response_delete.data.id;
-            let product_card = document.getElementById(`${deleted_item}`);
-            
-            product_card.remove();
+    } else {
+        try {
+            const api_delete = axios.create({
+                baseURL: 'https://fakestoreapi.com'
+            });
+    
+            let response_delete = await api_delete.delete(`/products/${item_id}`);
+            if (response_delete.data) {
+    
+                let deleted_item = response_delete.data.id;
+                let product_card = document.getElementById(`${deleted_item}`);
+                
+                product_card.remove();
+            }
+        } catch (error) {
+            console.error('Error while deleting products:', error);
         }
-    } catch (error) {
-        console.error('Error while deleting products:', error);
     }
+    
+
 };
 
 function deleteItemCall(item_id) {
@@ -207,7 +224,15 @@ function deleteItemCall(item_id) {
 function hideShowToggle(item_id) {
 
     let edit_form = document.querySelector(`#popup_form_${item_id}`);
-    edit_form.classList.toggle('hidden')
+
+    if (edit_form.querySelector('#name').value == "New Item") {
+        if (confirm('Are you sure you want discard the new item?') == true) {
+            document.getElementById(item_id).remove();
+        }
+    } else {
+        edit_form.classList.toggle('hidden')
+    }
+    
 };
 
 function editItem(item_id) {
@@ -227,7 +252,20 @@ function editItem(item_id) {
         'category': category.value
     }
 
-    updateItem(item_id, edited_item_data, card);
+    all_items_filled = true
+
+    for (let field in edited_item_data) {
+        if (edited_item_data[field] == '') {
+
+            all_items_filled = false
+            alert(`${field} not filled, please, fill all fields before confirm`);
+
+        };
+      }
+    if (all_items_filled) {
+        updateItem(item_id, edited_item_data, card);
+    }
+    
 };
 
 const updateItem = async(item_id, update_data) => {
@@ -314,3 +352,93 @@ function filterCategory(category) {
     })
 
 };
+
+function newItemOpen() {
+    items = document.querySelectorAll('.product-card')
+    let new_id = 0
+
+    items.forEach(item => {
+        let current_id = parseInt(item.id);
+
+        if (current_id > new_id) {
+            new_id = current_id;
+        }
+    });
+    new_id ++
+    
+    product_list = document.querySelector('.product-list');
+
+    product_names = Array.from(document.querySelectorAll('.product-name')).map(element => element.innerText);
+    if (product_names.some(name => name == ('New Item'))) {
+        alert('A new item are beeing created, finish the creation of the new item before initiate another one')
+    } else {
+        const new_item_data = {
+            'title': 'New Item',
+            'price': '',
+            'description': '',
+            'image': '',
+            'category': ''
+        }
+        
+        createProduct(new_id, new_item_data)
+    }
+
+}
+
+const createProduct = async (item_id, new_item_data) => {
+    try {
+        // Configurar Axios
+        const api_create = axios.create({
+            baseURL: 'https://fakestoreapi.com'
+        });
+
+        const response = await api_create.post('/products', new_item_data);
+
+        if (response.data) {
+            
+            let validated_item_data = {
+                'id': item_id,
+                'title': response.data.title,
+                'price': response.data.price,
+                'description': response.data.description,
+                'image': response.data.image,
+                'category': response.data.category
+            }
+            
+            fetchCategories().then(categories => {displayProducts(Array(validated_item_data), categories)});
+        }
+    } catch (error) {
+        console.error('Error while creating a new product:', error);
+    }
+};
+
+function sortBy() {
+    let criteria = document.querySelector('.sortby-selector').value;
+    let product_list = document.querySelectorAll('.product-card');
+
+    let sortable_items = [];
+
+    product_list.forEach(product => {
+        let id = product.getAttribute('id');
+        let price = parseFloat(product.querySelector('.price-value').innerText.replace(/[^0-9.-]+/g,""));
+        let category = product.querySelector('.product-category').innerText;
+        sortable_items.push({ id, price, category, element: product });
+    });
+
+    if (criteria === 'price-value') {
+        sortable_items.sort((a, b) => a.price - b.price);
+    } else if (criteria === 'product-category') {
+        sortable_items.sort((a, b) => a.category.localeCompare(b.category));
+    }
+
+    let container = document.querySelector('.product-list');
+    
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+
+    sortable_items.forEach(item => {
+        container.appendChild(item.element);
+    });
+
+}

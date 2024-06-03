@@ -6,26 +6,34 @@
     --main-light-color: #CFEEFF;
     --main-light-gray: #f7f7fd;
     --absolute-white: #FFFFFF;
+    --absolute-black: #000;
 
 }
 
+.header-item.btn {
+    padding: 0.4rem 0.4rem 0.2rem 0.4rem;
+    border-width:0.1rem;
+    background-color: #FFF;
+    fill: var(--absolute-black);
+    border-color: var(--absolute-black);
+    cursor: pointer;
+}
 
-@media (max-width: 499px) {
+.header-item.btn:hover {
+    padding: 0.4rem 0.4rem 0.2rem 0.4rem;
+    border-width:0.1rem;
+    background-color: #FFF;
+    fill: var(--main-dark-color);
+    border-color: var(--main-dark-color);
+    cursor: pointer;
+}
+
+@media (max-width: 599px) {
     body {
         padding: 0.2rem 0.5rem 0 0.5rem;
         margin: 0%;
         font-family: var(--main-font);
         background-color: var(--main-light-gray);
-    }
-
-    .header-item.btn {
-        padding: 0.4rem 0.4rem 0.2rem 0.4rem;
-        border-width:0.1rem;
-        border-radius: 0.3rem;
-        background-color: #FFF;
-        fill: var(--main-dark-color);
-        border-color: var(--main-dark-color);
-        cursor: pointer;
     }
     
     .header-item.buttons {
@@ -78,7 +86,6 @@
         top: 20rem;
         padding: 0.5rem;
         margin: 0.5rem 0 0.5rem 0;
-        border-radius: 1rem 1rem 0rem 0rem;
         background-color: var(--absolute-white)
     }
     
@@ -93,7 +100,7 @@
     }
 
     .add-item-btn {
-        display: none;
+        display: inline-flex;
     }
     
     .product-list {
@@ -111,7 +118,6 @@
     }
     
     .product-card .card-header {
-        border-radius: 1rem 1rem 0rem 0rem;
         padding: 0.5rem;
     }
     
@@ -225,7 +231,7 @@
         border-bottom: 0;
         border-left: 1;
         border-left-width: 0.1rem;
-        border-color: #000;
+        border-color: var(--absolute-black);
         background-image: linear-gradient(to right, var(--main-light-gray), var(--absolute-white));
         cursor: pointer;
     }
@@ -241,8 +247,20 @@
         color: var(--main-dark-color);
         cursor: pointer;
     }
-    
-}
+
+    .add-item-btn {
+        border: 0;
+        background-color: transparent;
+        fill: var(--absolute-black);
+        cursor: pointer;
+    }
+
+    .add-item-btn:hover {
+        border: 0;
+        background-color: transparent;
+        fill: var(--main-dark-color);
+        cursor: pointer;
+    }
 
 /* Edit Item Form */
 
@@ -299,23 +317,15 @@ textarea.form-element {
     display: none;
 }
 
-@media (min-width: 500px) {
+}
+
+@media (min-width: 600px) {
 
     body {
         padding: 1rem 2rem 0 2rem;
         margin: 0%;
         font-family: var(--main-font);
         background-color: var(--main-light-gray);
-    }
-    
-    .header-item.btn {
-        padding: 0.4rem 0.4rem 0.2rem 0.4rem;
-        border-width:0.1rem;
-        border-radius: 0.3rem;
-        background-color: #FFF;
-        fill: var(--main-dark-color);
-        border-color: var(--main-dark-color);
-        cursor: pointer;
     }
     
     .header-item.buttons {
@@ -359,7 +369,6 @@ textarea.form-element {
         top: 20rem;
         padding: 1rem 1rem 1rem 1rem;
         margin: 0.5rem 0 0.5rem 0;
-        border-radius: 1rem 1rem 0rem 0rem;
         background-color: var(--absolute-white)
     }
     
@@ -380,7 +389,6 @@ textarea.form-element {
     }
     
     .product-card .card-header {
-        border-radius: 1rem 1rem 0rem 0rem;
         padding: 1rem;
     }
     
@@ -525,7 +533,7 @@ textarea.form-element {
 
     .buttons-wrap {
         display: flex;
-        gap: 3rem;
+        gap: 2rem;
         justify-content: center;
     }
 
@@ -551,7 +559,7 @@ textarea.form-element {
         border-bottom: 0;
         border-left: 1;
         border-left-width: 0.1rem;
-        border-color: #000;
+        border-color: var(--absolute-black);
         background-image: linear-gradient(to right, var(--main-light-gray), var(--absolute-white));
         cursor: pointer;
     }
@@ -578,21 +586,24 @@ textarea.form-element {
         font-style: italic;
         font-weight: 400;
     }
-    
-    .header-item.btn {
-        padding: 0.4rem 0.4rem 0.2rem 0.4rem;
-        border-width:0.1rem;
-        border-radius: 0.3rem;
-        background-color: #FFF;
-        fill: var(--main-dark-color);
-        border-color: var(--main-dark-color);
-        cursor: pointer;
-    }
 
     .header-item.buttons {
         margin-left: auto;
         margin-right: 0.5rem;
     }
-    
+
+    .add-item-btn {
+        border: 0;
+        background-color: transparent;
+        fill: var(--absolute-black);
+        cursor: pointer;
+    }
+
+    .add-item-btn:hover {
+        border: 0;
+        background-color: transparent;
+        fill: var(--main-dark-color);
+        cursor: pointer;
+    }
 
 }
